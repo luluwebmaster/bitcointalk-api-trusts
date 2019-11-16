@@ -5,7 +5,7 @@
 
 $config = [
     'api' => [
-        'link' => 'https://api.example.com/trusts/api.php' // Change this link by the link of trusts API
+        'link' => 'https://api.example.com/trusts/public/api.php' // Change this link by the link of trusts API
     ],
     'login' => [
         'link' => 'https://bitcointalk.org/index.php?action=login2', // Don't change this link
