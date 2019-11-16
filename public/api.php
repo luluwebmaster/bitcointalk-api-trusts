@@ -3,10 +3,6 @@
 // Set JSON header content type
 header('Content-Type: application/json');
 
-// Show all PHP error's
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
 // Get config
 require_once('../config/config.php');
 
@@ -64,7 +60,7 @@ if(isset($profileId) && !empty($profileId)) {
 
     // Set final JSON data
     $finalJsonData = [
-        'success' => false
+        'error' => true
     ];
 }
 

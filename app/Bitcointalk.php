@@ -101,9 +101,13 @@ class Bitcointalk {
         $this->executeRequest();
 
         preg_match('/<span class="trustscore" style="color:black">(.+?)<\/span>/', $this->getResponseBody(), $trusts);
+        preg_match('/<title>(.+?)<\/title>/', $this->getResponseBody(), $username);
 
-        return((isset($trusts[0])) ? array_map('trim', explode('/', strip_tags($trusts[1]))) : [
-            'success'=> false
+        return((isset($trusts[0])) ? [
+                'username' => str_replace('View the profile of ', '', strip_tags($username[0])),
+                'trusts' => array_map('trim', explode('/', strip_tags($trusts[1])))
+            ] : [
+            'error'=> true
         ]);
     }
 }
