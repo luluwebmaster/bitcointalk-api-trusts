@@ -97,15 +97,25 @@ class Bitcointalk {
 
     public function getTrustsInfos($profileId) {
 
+        $warning = false;
+
         $this->setUrl('https://bitcointalk.org/index.php?action=profile;u='.$profileId);
         $this->executeRequest();
 
         preg_match('/<span class="trustscore" style="color:black">(.+?)<\/span>/', $this->getResponseBody(), $trusts);
         preg_match('/<title>(.+?)<\/title>/', $this->getResponseBody(), $username);
 
+        if(!isset($trusts[0])) {
+
+            preg_match('/<span class="trustscore" style="color:#DC143C">(.+?)<\/span>/', $this->getResponseBody(), $trusts);
+
+            $warning = true;
+        }
+
         return((isset($trusts[0])) ? [
+                'warning' => $warning,
                 'username' => str_replace('View the profile of ', '', strip_tags($username[0])),
-                'trusts' => array_map('trim', explode('/', strip_tags($trusts[1])))
+                'trusts' => array_map('trim', explode('/', str_replace('!!!:  ', '', strip_tags($trusts[1]))))
             ] : [
             'error'=> true
         ]);
